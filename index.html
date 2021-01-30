@@ -13,14 +13,34 @@
 	</head>
 	<body>
 
-		<h1>Which date?</h1>
-		<input type="text" name="" value="">
-		<button type="button" name="button">Get Picture</button>
+		<h1>Library</h1>
+		<img src="img\library.png" alt="">
+		<button type="button" id="add_book" name="button">Add book</button>
+		<div class = "book-form-container">
+			<label for="book_title">Title:</label>
+			<input type="text" class ="new-book-form" id="book_title" name="title" value="" placeholder="The Game of Thrones">
+			<label for = "book_author">Author:</label>
+			<input type="text" class ="new-book-form" id="book_author" name="author" value=""placeholder="George R. R. Martin">
+			<label for="book_pages">Number of Pages:</label>
+			<input type="text" class ="new-book-form" id="book_pages" name="pages" value="" placeholder=694>
+			<div class = "read-container">
+				<p>Finished book?</p>
+				<input type="radio" id="read_true" name = "read">
+				<label for="read_true">Read</label>
+				<input type="radio" id="read_false" name = "read">
+				<label for="read_false">Not Read</label>
+			</div>
+		</div>
+		<div class = "library-container">
+			<div class = "book-container">
+				<h3>The Game of Thrones</h3>
+				<p>George R. R. Martin</p>
+				<p>694</p>
+				<button class="read-button">Read</button>
+				<button class="close">x</button>
+			</div>
+		</div>
 
-		<h2>Name</h2>
-		<img src="" alt="">
-		<h3>Description</h3>
-
-		<script type="text/javascript" src="main.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
 	</body>
 </html>

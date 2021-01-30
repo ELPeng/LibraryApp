@@ -1,25 +1,67 @@
-function solomonsQuest(ar){
-    let dilationLevel = 0
-    let goromon = {
-        xCoord: 0,
-        yCoord: 0
+document.querySelector('#add_book').addEventListener('click', createBook)
+document.querySelector
+let myLibrary =[]
+
+class Book{
+    constructor(title, author, pages, read){
+        this.title = title
+        this.author = author
+        this.pages = pages
+        this.read = read
     }
-	ar.forEach(move => {
-        dilationLevel += move[0]
-        dilFactor = Math.pow(2,dilationLevel)
-        switch(move[1]){
-            case 0:
-                return goromon.yCoord += move[2]*dilFactor
-            case 1:
-                return goromon.xCoord += move[2]*dilFactor
-            case 2: 
-                return goromon.yCoord -= move[2]*dilFactor
-            case 3: 
-                return goromon.xCoord -= move[2]*dilFactor
-        }
-    })
-    return [goromon.xCoord, goromon.yCoord]
 }
 
-let map3 = [[1,1,20],[1,2,30],[1,3,8],[1,0,2],[1,1,6],[1,2,4],[1,3,6],[-7,0,100]];
-console.log(solomonsQuest(map3))
+//Brings up window to input new book details
+//need to add an enter key with event listener to store inputs into vars
+function createBook(){
+
+}
+
+
+function displayLibrary(){
+    myLibrary.forEach(book => {
+        for(const property in book){
+            console.log(`${property}: ${book[property]}`)
+        }
+    })
+}
+
+//After filling out new book details, a new block with  book info is displayed to the DOM under class '.book-container'
+function addBooktoLibrary(book){
+    myLibrary.push(book)
+    let newBook = document.createElement('div')
+    newBook.classList.add('book-container')
+    document.querySelector('.library-container').appendChild(newBook)
+    for(const prop in book){
+        let propText = document.createTextNode(book[prop])
+        console.log(propText)
+        let propElement = document.createElement('p')
+        propElement.appendChild(propText)
+        newBook.appendChild(propElement)
+    }
+
+  
+    // titleNode.appendChild(titleTxt)
+    // authorNode.appendChild(authorTxt)
+    // authorNode.appendChild(authorTxt)
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+//TESTING
+
+LordoftheRings = new Book('Fellowship of the Rings', 'J.R.R Tolkien', 1000, true)
+oldMan = new Book('The Old Man and the Sea', 'Ernest Hemingway', 300, false)
+
+addBooktoLibrary(oldMan)
+addBooktoLibrary(LordoftheRings)
+
