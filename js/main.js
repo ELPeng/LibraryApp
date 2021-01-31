@@ -38,21 +38,8 @@ function addBooktoLibrary(book){
         let propElement = document.createElement('p')
         propElement.appendChild(propText)
         newBook.appendChild(propElement)
-    }
-
-  
-    // titleNode.appendChild(titleTxt)
-    // authorNode.appendChild(authorTxt)
-    // authorNode.appendChild(authorTxt)
-    
-
+    }  
 }
-
-
-
-
-
-
 
 
 
