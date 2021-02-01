@@ -6,7 +6,6 @@ let bookTitle = document.getElementById('book_Title')
 let bookAuthor = document.getElementById('book_Author')
 let bookPages = document.getElementById('book_Pages')
 let checkRead = document.getElementById('check_Read')
-let bookIndex = 1
 
 class Book{
     constructor(title, author, pages, read){
@@ -40,25 +39,20 @@ function createBookObj(){
 //Then displays a closeable card to the DOM with book object info
 function addBooktoLibrary(){
     let book = createBookObj()
-    let checkEmpty = (bookTitle.value && bookAuthor.value && bookPages.value)
+    let formComplete = (bookTitle.value && bookAuthor.value && bookPages.value)
     myLibrary.push(book)
-    if(checkEmpty){
+    let bookIndex = myLibrary.indexOf(book)
+    if(formComplete){
         let newBookElem = document.createElement('div')
         newBookElem.classList.add('book-container')
         newBookElem.setAttribute('id', `bookCard_${bookIndex}`)
         document.querySelector('.library-container').appendChild(newBookElem)
-        let closeElem = document.createElement('button')
-        let closeText = document.createTextNode('x')
-        closeElem.appendChild(closeText)
-        closeElem.className += 'close close-book close:hover'
-        document.getElementById(`bookCard_${bookIndex}`).appendChild(closeElem)
+        createCloseButton(`bookCard_${bookIndex}`)
         for(const prop in book){
-            let propText = document.createTextNode(book[prop])
             let propElement = document.createElement('p')
-            propElement.appendChild(propText)
+            propElement.innerHTML = `${capitalize(prop)}: ${book[prop]}`
             newBookElem.appendChild(propElement)
         }
-        bookIndex++  
         clearFields()
     }
     else   
@@ -77,12 +71,32 @@ function clearFields(){
 function openForm(){
     document.getElementById('book_Form').style.display = "block"
 }
-
 function closeForm(){
     document.getElementById('book_Form').style.display = "none"   
 }
 
+function createCloseButton(id){
+    let closeElem = document.createElement('button')
+    closeElem.innerHTML = 'x'
+    closeElem.className += 'close close-book close:hover'
+    document.getElementById(id).appendChild(closeElem)
+    closeElem.addEventListener('click', removeBookCard)
+}
 
+function removeBookCard(){
+    let index = this.parentElement.id.slice(-1)
+    myLibrary.splice(index, 1)
+    this.parentElement.classList.add('close-book-animation')
+    this.parentElement.remove()
+    let bookArr = document.querySelectorAll('.book-container')
+    for(let i = 0; i<bookArr.length; i++){
+        bookArr[i].setAttribute('id', `bookCard_${i}`)
+    }
+}
+
+function capitalize(str){
+    return str[0].toUpperCase() + str.slice(1)
+}
 
 //TESTING
 
