@@ -2,6 +2,11 @@ document.querySelector('#open_Form').addEventListener('click', openForm)
 document.querySelector('#close_Form').addEventListener('click', closeForm)
 document.querySelector('.submit').addEventListener('click', addBooktoLibrary)
 let myLibrary =[]
+let bookTitle = document.getElementById('book_Title')
+let bookAuthor = document.getElementById('book_Author')
+let bookPages = document.getElementById('book_Pages')
+let checkRead = document.getElementById('check_Read')
+let bookIndex = 1
 
 class Book{
     constructor(title, author, pages, read){
@@ -28,20 +33,45 @@ function displayLibrary(){
 }
 
 function createBookObj(){
-    return new Book (document.getElementById('book_Title').value, document.getElementbyId('book_Author').value, document.getElementbyId('book_Pages').value, document.getElementbyId('check_Read').value )
+    return new Book (bookTitle.value, bookAuthor.value, bookPages.value, checkRead.checked)
 }
-//After filling out new book details, a new block with  book info is displayed to the DOM under class '.book-container'
-function addBooktoLibrary(book){
+
+//Checks that input fields have been filled out before allowing submission
+//Then displays a closeable card to the DOM with book object info
+function addBooktoLibrary(){
+    let book = createBookObj()
+    let checkEmpty = (bookTitle.value && bookAuthor.value && bookPages.value)
     myLibrary.push(book)
-    let newBookElem = document.createElement('div')
-    newBookElem.classList.add('book-container')
-    document.querySelector('.library-container').appendChild(newBookElem)
-    for(const prop in book){
-        let propText = document.createTextNode(book[prop])
-        let propElement = document.createElement('p')
-        propElement.appendChild(propText)
-        newBookElem.appendChild(propElement)
-    }  
+    if(checkEmpty){
+        let newBookElem = document.createElement('div')
+        newBookElem.classList.add('book-container')
+        newBookElem.setAttribute('id', `bookCard_${bookIndex}`)
+        document.querySelector('.library-container').appendChild(newBookElem)
+        let closeElem = document.createElement('button')
+        let closeText = document.createTextNode('x')
+        closeElem.appendChild(closeText)
+        closeElem.className += 'close close-book close:hover'
+        document.getElementById(`bookCard_${bookIndex}`).appendChild(closeElem)
+        for(const prop in book){
+            let propText = document.createTextNode(book[prop])
+            let propElement = document.createElement('p')
+            propElement.appendChild(propText)
+            newBookElem.appendChild(propElement)
+        }
+        bookIndex++  
+        clearFields()
+    }
+    else   
+        alert('Must complete all fields!')
+}
+
+//clears the form fields and closes the book form
+function clearFields(){
+    bookTitle.value = ''
+    bookAuthor.value = ''
+    bookPages.value = ''
+    checkRead.checked = false
+    closeForm()
 }
 
 function openForm(){
@@ -59,9 +89,6 @@ function closeForm(){
 LordoftheRings = new Book('Fellowship of the Rings', 'J.R.R Tolkien', 1000, true)
 oldMan = new Book('The Old Man and the Sea', 'Ernest Hemingway', 300, false)
 
-addBooktoLibrary(oldMan)
-addBooktoLibrary(LordoftheRings)
-addBooktoLibrary(LordoftheRings)
-addBooktoLibrary(LordoftheRings)
-addBooktoLibrary(LordoftheRings)
+
+
 
