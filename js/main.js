@@ -2,6 +2,7 @@ document.querySelector('#open_Form').addEventListener('click', openForm)
 document.querySelector('#close_Form').addEventListener('click', closeForm)
 document.querySelector('.submit').addEventListener('click', createBookCard)
 let myLibrary =[]
+
 let bookTitle = document.getElementById('book_Title')
 let bookAuthor = document.getElementById('book_Author')
 let bookPages = document.getElementById('book_Pages')
@@ -66,15 +67,19 @@ function createCloseButton(id){
     closeElem.addEventListener('click', removeBookCard)
 }
 
-function removeBookCard(){
-    let index = this.parentElement.id.slice(-1)
-    myLibrary.splice(index, 1)
-    // this.parentElement.classList.add('close-book-animation')
-    this.parentElement.remove()
-    let bookArr = document.querySelectorAll('.book-container')
-    for(let i = 0; i<bookArr.length; i++){
-        bookArr[i].setAttribute('id', `bookCard_${i}`)
-    }
+function removeBookCard(e){
+    e.target.parentElement.classList.add('close-book-animation')
+    Promise.all(
+    e.target.parentElement.getAnimations().map(animation => animation.finished))
+        .then(() => e.target.parentElement.remove())
+
+    // let index = e.parentElement.id.slice(-1)
+    // myLibrary.splice(index, 1)
+    // this.parentElement.remove()
+    // let bookArr = document.querySelectorAll('.book-container')
+    // for(let i = 0; i<bookArr.length; i++){
+    //     bookArr[i].setAttribute('id', `bookCard_${i}`)
+    // }
 }
 
 function checkReadStatus(book, bookID){
