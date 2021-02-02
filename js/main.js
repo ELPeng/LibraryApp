@@ -68,18 +68,16 @@ function createCloseButton(id){
 }
 
 function removeBookCard(e){
+    let index = e.target.parentElement.id.slice(-1)
+    myLibrary.splice(index, 1)
+    let bookArr = document.querySelectorAll('.book-container')
+    for(let i = 0; i<bookArr.length; i++){
+        bookArr[i].setAttribute('id', `bookCard_${i}`)
     e.target.parentElement.classList.add('close-book-animation')
     Promise.all(
     e.target.parentElement.getAnimations().map(animation => animation.finished))
         .then(() => e.target.parentElement.remove())
-
-    // let index = e.parentElement.id.slice(-1)
-    // myLibrary.splice(index, 1)
-    // this.parentElement.remove()
-    // let bookArr = document.querySelectorAll('.book-container')
-    // for(let i = 0; i<bookArr.length; i++){
-    //     bookArr[i].setAttribute('id', `bookCard_${i}`)
-    // }
+    }
 }
 
 function checkReadStatus(book, bookID){
@@ -93,8 +91,18 @@ function createReadButtons(book, bookID){
     readButton.classList.add('read-button')
     readButton.innerHTML = 'Toggle Read'
     bookEl.appendChild(readButton)
-    readButton.addEventListener('click', function(){
+    readButton.addEventListener('click', function(e){
         book.read = !book.read
+        bookEl.children[4].innerHTML = `Read: ${book.read}`
+        if(e.target.parentElement.classList.contains('read')){
+            e.target.parentElement.classList.remove('read')
+            e.target.parentElement.classList.add('not-read')
+        }
+        else{
+            e.target.parentElement.classList.remove('not-read')
+            e.target.parentElement.classList.add('read')
+        }
+        console.log(e.target.parentElement.classList)
         console.log(book.read)
     })
     
