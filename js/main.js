@@ -104,8 +104,7 @@ function createReadButtons(book, bookID){
         }
         console.log(e.target.parentElement.classList)
         console.log(book.read)
-    })
-    
+    })   
 }
 
 function capitalize(str){
